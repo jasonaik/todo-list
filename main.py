@@ -179,7 +179,7 @@ def logout():
 @app.route("/all-lists")
 def get_all_lists():
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
     lists = User.query.get(current_user.id).lists
     return render_template("all-lists.html", all_lists=lists, current_user=current_user)
@@ -188,7 +188,7 @@ def get_all_lists():
 @app.route("/new-list", methods=["GET", "POST"])
 def add_new_list():
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
     form = EntryForm()
     if form.validate_on_submit():
@@ -207,7 +207,7 @@ def add_new_list():
 @app.route("/create-task/<int:list_id>", methods=["GET", "POST"])
 def add_new_task(list_id):
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
     to_do_list = User.query.get(current_user.id).lists[list_id]
     form = TasksEntryForm()
@@ -228,7 +228,7 @@ def add_new_task(list_id):
 def show_tasks(list_id):
     requested_list = User.query.get(current_user.id).lists[list_id]
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
 
     return render_template("show-tasks.html", list=requested_list, current_user=current_user, list_id=list_id)
@@ -238,7 +238,7 @@ def show_tasks(list_id):
 def edit_tasks(list_id):
     requested_list = User.query.get(current_user.id).lists[list_id]
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
 
     return render_template(
@@ -248,7 +248,7 @@ def edit_tasks(list_id):
 @app.route("/edit-lists", methods=["GET", "POST"])
 def edit_lists():
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
 
     lists = User.query.get(current_user.id).lists
@@ -260,7 +260,7 @@ def edit_lists():
 def edit_task(list_id, task_id):
     requested_list = User.query.get(current_user.id).lists[list_id]
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
 
     edit_tasks_form = EditTasksForm(entry=requested_list.tasks[task_id].task_name)
@@ -278,7 +278,7 @@ def edit_task(list_id, task_id):
 def edit_list(list_id):
     requested_list = User.query.get(current_user.id).lists[list_id]
     if not current_user.is_authenticated:
-        flash("You need to login or register to comment.")
+        flash("You need to login or register to continue.")
         return redirect(url_for("login"))
 
     edit_list_form = EditNameForm(entry=requested_list.list_name)
