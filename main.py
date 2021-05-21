@@ -13,6 +13,7 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+# app.config['SECRET_KEY'] = "VeryGoodSecretKey12345"
 Bootstrap(app)
 
 # CONNECT TO DB
@@ -295,7 +296,7 @@ def edit_list(list_id):
 @login_required
 @app.route("/delete-task/<int:task_id>/<int:list_id>")
 def delete_task(task_id, list_id):
-    task_to_delete = Task.query.get(task_id + 1)
+    task_to_delete = User.query.get(current_user.id).lists[list_id].tasks[task_id]
     db.session.delete(task_to_delete)
     db.session.commit()
     return redirect(url_for("edit_tasks", list_id=list_id))
@@ -304,7 +305,7 @@ def delete_task(task_id, list_id):
 @login_required
 @app.route("/delete-list/<int:list_id>")
 def delete_list(list_id):
-    list_to_delete = ToDoList.query.get(list_id + 1)
+    list_to_delete = User.query.get(current_user.id).lists[list_id]
     db.session.delete(list_to_delete)
     db.session.commit()
     return redirect(url_for("edit_lists", list_id=list_id))
@@ -313,7 +314,7 @@ def delete_list(list_id):
 @login_required
 @app.route("/done-task/<int:task_id>/<int:list_id>")
 def done_task(task_id, list_id):
-    task_done = Task.query.get(task_id + 1)
+    task_done = User.query.get(current_user.id).lists[list_id].tasks[task_id]
     if task_done.done is False:
         task_done.done = True
     elif task_done.done is True:
@@ -325,7 +326,7 @@ def done_task(task_id, list_id):
 @login_required
 @app.route("/done-list/<int:list_id>")
 def done_list(list_id):
-    list_done = ToDoList.query.get(list_id + 1)
+    list_done = User.query.get(current_user.id).lists[list_id]
     if list_done.done is False:
         list_done.done = True
     elif list_done.done is True:
