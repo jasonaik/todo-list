@@ -20,3 +20,4 @@ Flask-WTF==0.14.3
 colorama==0.4.4
 email-validator==1.1.2
 setuptools~=56.2.0
+gunicorn==20.1.0
