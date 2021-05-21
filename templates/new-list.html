@@ -1,0 +1,57 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+
+
+    <header class="masthead" style="background-image: url('https://cdn.pixabay.com/photo/2015/01/08/18/26/man-593333_1280.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Add a new list</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    </header>
+
+<div class="container some-margin">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto todo-entry">
+
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+        </div>
+
+        <div class="col-lg-8 col-md-10 mx-auto some-margin some-top-margin">
+            {% for list in current_user.lists %}
+                <ul>
+                    <li>
+                        <div>
+                            {% if list.done: %}
+                                <h3><s>{{list.list_name}}</s></h3>
+                            {% else: %}
+                                <h3>{{list.list_name}}</h3>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            {%endfor%}
+        </div>
+
+        <div class="col-lg-8 col-md-10 mx-auto some-margin">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('get_all_lists') }}" role="button">Go Back</a>
+        </div>
+    </div>
+  </div>
+
+<section class="tasks">
+
+</section>
+
+</body>
+</html>
+{% endblock %}

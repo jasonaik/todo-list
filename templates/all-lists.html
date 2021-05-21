@@ -1,0 +1,54 @@
+{% include "header.html" %}
+
+
+    <header class="masthead" style="background-image: url('https://cdn.pixabay.com/photo/2017/07/04/10/05/checklist-2470549_1280.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Your to-do lists</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    </header>
+
+<div class="container some-margin">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {% for list in all_lists %}
+                <a href="{{ url_for('show_tasks', list_id=all_lists.index(list)) }}">
+                    {% if is_edit: %}
+                        {% if list.done: %}
+                            <h2><s>{{ list.list_name }}</s> &nbsp; &nbsp; <a href="{{url_for('edit_list', list_id=current_user.lists.index(list))}}"><i class="fas fa-pen"></i></a> &nbsp; <a href="{{url_for('delete_list', list_id=current_user.lists.index(list))}}"><i class="fas fa-times"></i></a></h2>
+                        {% else: %}
+                            <h2>{{ list.list_name }} &nbsp; &nbsp; <a href="{{url_for('edit_list', list_id=current_user.lists.index(list))}}"><i class="fas fa-pen"></i></a> &nbsp; <a href="{{url_for('delete_list', list_id=current_user.lists.index(list))}}"><i class="fas fa-times"></i></a></h2>
+                        {% endif %}
+                    {% else: %}
+                        {% if list.done: %}
+                            <h2><s>{{ list.list_name }}</s> &nbsp; &nbsp; <a href="{{url_for('done_list', list_id=current_user.lists.index(list))}}"><i class="fas fa-check"></i></a></h2>
+                        {% else: %}
+                            <h2>{{ list.list_name }} &nbsp; &nbsp; <a href="{{url_for('done_list', list_id=current_user.lists.index(list))}}"><i class="fas fa-check"></i></a></h2>
+                        {% endif %}
+                    {% endif %}
+                </a>
+            {%endfor%}
+        </div>
+
+        <div class="col-lg-8 col-md-10 mx-auto some-margin little-top-margin">
+            {% if is_edit: %}
+                <a class="btn btn-primary btn-lg" href="{{ url_for('get_all_lists') }}" role="button">Show Lists</a>
+            {% else: %}
+                <a class="btn btn-primary btn-lg" href="{{ url_for('edit_lists') }}" role="button">Edit Lists</a>
+                <a class="btn btn-primary btn-lg" href="{{ url_for('add_new_list') }}" role="button">Add List</a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

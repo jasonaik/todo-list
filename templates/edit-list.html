@@ -1,0 +1,37 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://cdn.pixabay.com/photo/2014/05/02/21/50/laptop-336378_1280.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+              {% if is_list: %}
+                <h1>Edit List: {{current_user.lists[list_id].list_name}}</h1>
+              {% else: %}
+                <h1>Edit Task: {{current_user.lists[list_id].tasks[task_id].task_name}}</h1>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container some-margin">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+        </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
+{% endblock %}

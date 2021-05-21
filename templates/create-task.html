@@ -1,0 +1,52 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('https://cdn.pixabay.com/photo/2017/04/19/13/03/coffee-2242213_1280.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1 class="new-list-title">Add a new task to {{current_user.lists[list_id].list_name}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    </header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+        </div>
+
+        <div class="col-lg-8 col-md-10 mx-auto some-margin some-top-margin">
+            {% for task in current_user.lists[list_id].tasks %}
+                <ul>
+                    <li>
+                        <div>
+                            {% if task.done: %}
+                                <h3><s>{{task.task_name}}</s></h3>
+                            {% else: %}
+                                <h3>{{task.task_name}}</h3>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            {%endfor%}
+        </div>
+
+        <div class="col-lg-8 col-md-10 mx-auto some-margin">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('show_tasks', list_id=list_id) }}" role="button">Go Back</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}
